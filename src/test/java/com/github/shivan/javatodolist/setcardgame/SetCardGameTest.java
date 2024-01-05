@@ -2,6 +2,8 @@ package com.github.shivan.javatodolist.setcardgame;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SetCardGameTest {
@@ -104,5 +106,18 @@ class SetCardGameTest {
         card3.shading = 3;
 
         assertFalse(setCardGame.isSet(card1, card2, card3));
+    }
+
+    @Test
+    void testCreateDeckWorksAsExpected() {
+        SetCardGame setCardGame = new SetCardGame();
+        ArrayList<Card> deck = setCardGame.createDeck();
+
+        assertEquals(81, deck.size());
+
+        for (Card currentCard : deck) {
+            long numberOfOccurrences = deck.stream().filter(card -> card.equals(currentCard)).count();
+            assertEquals(1, numberOfOccurrences);
+        }
     }
 }
