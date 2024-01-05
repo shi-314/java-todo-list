@@ -16,7 +16,12 @@ public class TodoListController {
         String todoListString = "";
 
         for (TodoItem item : todoList) {
-            todoListString += item.content + "<br>";
+            if (!item.isDone) {
+                todoListString += item.content + "<br>";
+            }
+            else {
+                todoListString += "<s>" + item.content + "</s>" + "<br>";
+            }
         }
 
         return todoListString;
@@ -32,5 +37,13 @@ public class TodoListController {
         todoList.add(newItem);
 
         return "Add Item: " + itemContent;
+    }
+
+    @GetMapping("/mark-item")
+    public String markItem (
+            @RequestParam("index") int index
+    ){
+        todoList.get(index).isDone = !todoList.get(index).isDone;
+        return "String";
     }
 }
