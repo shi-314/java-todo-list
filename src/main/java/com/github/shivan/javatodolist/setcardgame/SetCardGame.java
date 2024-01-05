@@ -1,5 +1,7 @@
 package com.github.shivan.javatodolist.setcardgame;
 
+import java.util.ArrayList;
+
 public class SetCardGame {
 
     private boolean allTheSameOrAllDifferent (int a, int b, int c) {
@@ -23,5 +25,10 @@ public class SetCardGame {
         else {
             return false;
         }
+    }
+
+    public ArrayList<Card> createDeck() {
+        ArrayList<Card> deck = new ArrayList<>();
+        return deck;
     }
 }
