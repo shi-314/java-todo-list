@@ -33,4 +33,12 @@ public class TodoListController {
 
         return "Add Item: " + itemContent;
     }
+
+    @GetMapping("/mark-item")
+    public String markItem (
+            @RequestParam("index") int index
+    ){
+        todoList.get(index).isDone = !todoList.get(index).isDone;
+        return "String";
+    }
 }
