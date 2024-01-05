@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 @RestController
 public class TodoListController {
-    ArrayList<String> todoList = new ArrayList<String>();
+    ArrayList<String> todoList = new ArrayList<>();
 
     @GetMapping("/todo-list")
     public String getTodoList() {
