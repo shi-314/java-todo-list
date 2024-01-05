@@ -5,14 +5,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @RestController
 public class TodoListController {
     ArrayList<TodoItem> todoList = new ArrayList<>();
+    ArrayList<String> blackListedWords = new ArrayList<>(Arrays.asList("bad-word", "crap"));
+
+    public boolean isBlackListed(String word) {
+        return blackListedWords.contains(word);
+    }
 
     @GetMapping("/todo-list")
     public String getTodoList() {
-
         String todoListString = "";
 
         for (TodoItem item : todoList) {
@@ -27,9 +32,11 @@ public class TodoListController {
     }
 
     @GetMapping("/add-item")
-    public String addItem(
-            @RequestParam("item") String itemContent
-    ) {
+    public String addItem(@RequestParam("item") String itemContent) {
+        if (isBlackListed(itemContent)) {
+            return "Bad word detected";
+        }
+
         TodoItem newItem = new TodoItem();
         newItem.content = itemContent;
         newItem.isDone = false;
@@ -39,9 +46,7 @@ public class TodoListController {
     }
 
     @GetMapping("/mark-item")
-    public String markItem(
-            @RequestParam("index") int index
-    ) {
+    public String markItem(@RequestParam("index") int index) {
         todoList.get(index).isDone = !todoList.get(index).isDone;
         return "String";
     }
