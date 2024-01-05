@@ -10,4 +10,8 @@ public class TodoListController {
     public String getTodoList() {
         return "Todo List";
     }
+    @GetMapping ("Add-Item")
+    public String addItem() {
+        return "Add Item";
+    }
 }
