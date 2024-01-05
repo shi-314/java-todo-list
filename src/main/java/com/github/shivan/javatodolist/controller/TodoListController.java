@@ -18,8 +18,7 @@ public class TodoListController {
         for (TodoItem item : todoList) {
             if (!item.isDone) {
                 todoListString += item.content + "<br>";
-            }
-            else {
+            } else {
                 todoListString += "<s>" + item.content + "</s>" + "<br>";
             }
         }
@@ -29,7 +28,7 @@ public class TodoListController {
 
     @GetMapping("/add-item")
     public String addItem(
-        @RequestParam("item") String itemContent
+            @RequestParam("item") String itemContent
     ) {
         TodoItem newItem = new TodoItem();
         newItem.content = itemContent;
@@ -40,9 +39,9 @@ public class TodoListController {
     }
 
     @GetMapping("/mark-item")
-    public String markItem (
+    public String markItem(
             @RequestParam("index") int index
-    ){
+    ) {
         todoList.get(index).isDone = !todoList.get(index).isDone;
         return "String";
     }
