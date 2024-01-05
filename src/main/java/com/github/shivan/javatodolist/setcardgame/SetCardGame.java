@@ -29,6 +29,23 @@ public class SetCardGame {
 
     public ArrayList<Card> createDeck() {
         ArrayList<Card> deck = new ArrayList<>();
+        for (int color = 1; color <= 3; color++) {
+            for (int shape = 1; shape <= 3; shape++) {
+                for (int shading = 1; shading <= 3; shading++) {
+                    for (int number = 1; number <= 3; number++) {
+                        // Create a card with the current property values
+                        Card newCard = new Card();
+                        newCard.color = color;
+                        newCard.shape = shape;
+                        newCard.shading = shading;
+                        newCard.number = number;
+                        deck.add(newCard);
+                    }
+                }
+            }
+        }
+
+
         return deck;
     }
 }
