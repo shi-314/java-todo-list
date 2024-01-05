@@ -16,7 +16,12 @@ public class TodoListController {
         String todoListString = "";
 
         for (TodoItem item : todoList) {
-            todoListString += item.content + "<br>";
+            if (!item.isDone) {
+                todoListString += item.content + "<br>";
+            }
+            else {
+                todoListString += "<s>" + item.content + "</s>" + "<br>";
+            }
         }
 
         return todoListString;
