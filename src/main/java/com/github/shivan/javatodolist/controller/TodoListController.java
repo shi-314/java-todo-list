@@ -8,15 +8,15 @@ import java.util.ArrayList;
 
 @RestController
 public class TodoListController {
-    ArrayList<String> todoList = new ArrayList<String>();
+    ArrayList<TodoItem> todoList = new ArrayList<>();
 
     @GetMapping("/todo-list")
     public String getTodoList() {
 
         String todoListString = "";
 
-        for (String item : todoList) {
-            todoListString += item + "<br>";
+        for (TodoItem item : todoList) {
+            todoListString += item.content + "<br>";
         }
 
         return todoListString;
@@ -24,10 +24,13 @@ public class TodoListController {
 
     @GetMapping("/add-item")
     public String addItem(
-        @RequestParam("item") String item
+        @RequestParam("item") String itemContent
     ) {
-        todoList.add(item);
+        TodoItem newItem = new TodoItem();
+        newItem.content = itemContent;
+        newItem.isDone = false;
+        todoList.add(newItem);
 
-        return "Add Item: " +  item;
+        return "Add Item: " + itemContent;
     }
 }
