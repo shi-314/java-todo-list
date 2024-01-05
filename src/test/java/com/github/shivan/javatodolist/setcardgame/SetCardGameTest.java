@@ -120,4 +120,22 @@ class SetCardGameTest {
             assertEquals(1, numberOfOccurrences);
         }
     }
+
+    @Test
+    void testDrawRandomCardsWorksAsExpected() {
+        int numberOfCardsToDraw = 12;
+        SetCardGame setCardGame = new SetCardGame();
+        ArrayList<Card> deck = setCardGame.createDeck();
+        ArrayList<Card> randomCards = setCardGame.drawRandomCards(deck, numberOfCardsToDraw);
+
+        assertEquals(numberOfCardsToDraw, randomCards.size());
+
+        int expectedNumberOfRemainingCards = 81 - numberOfCardsToDraw;
+        assertEquals(expectedNumberOfRemainingCards, deck.size());
+
+        for (Card currentCard : randomCards) {
+            long numberOfOccurrences = randomCards.stream().filter(card -> card.equals(currentCard)).count();
+            assertEquals(1, numberOfOccurrences);
+        }
+    }
 }

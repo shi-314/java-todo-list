@@ -48,4 +48,9 @@ public class SetCardGame {
 
         return deck;
     }
+
+    public ArrayList<Card> drawRandomCards(ArrayList<Card> deck, int numberOfCards) {
+        ArrayList<Card> randomCards = new ArrayList<>();
+        return randomCards;
+    }
 }
