@@ -1,8 +1,34 @@
 <html>
 <head>
-    <title>Spring Boot Security Example - Login</title>
+    <title>Our Fancy Todo List 😎</title>
 </head>
 <body>
-Hello! This is coming from a static HTML file.
+<div id="todoContent"></div>
+
+<form id="myForm">
+    <label for="item">Item:</label>
+    <input type="text" id="item" name="item" placeholder="Todo Content">
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('http://localhost:8080/todo-list')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('todoContent').innerHTML = html;
+            });
+
+        document.getElementById('myForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var itemValue = document.getElementById('item').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/add-item?item=' + encodeURIComponent(itemValue), true);
+            xhr.send();
+            location.reload();
+        });
+    });
+</script>
 </body>
 </html>
