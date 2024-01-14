@@ -1,6 +1,7 @@
 package com.github.shivan.javatodolist.setcardgame;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SetCardGame {
 
@@ -53,5 +54,7 @@ public class SetCardGame {
         return deck.remove(0);
     }
 
-    
+    public void shuffleDeck(ArrayList<Card> deck) {
+        Collections.shuffle(deck);
+    }
 }

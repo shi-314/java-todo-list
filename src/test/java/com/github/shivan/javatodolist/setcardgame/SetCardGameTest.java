@@ -132,4 +132,20 @@ class SetCardGameTest {
         int sizeOfDeckAfterDrawing = deck.size();
         assertEquals(sizeOfDeckAfterDrawing, sizeOfDeckBeforeDrawing - 1);
     }
+
+    @Test
+    void testShuffleDeckWorksAsExpected() {
+        SetCardGame setCardGame = new SetCardGame();
+        ArrayList<Card> deck = setCardGame.createDeck();
+        Card firstCardBeforeShuffling = deck.get(0);
+
+        int sizeBeforeShuffling = deck.size();
+        setCardGame.shuffleDeck(deck);
+        int sizeAfterShuffling = deck.size();
+
+        Card firstCardAfterShuffling = deck.get(0);
+
+        assertEquals(sizeAfterShuffling, sizeBeforeShuffling);
+        assertNotEquals(firstCardBeforeShuffling, firstCardAfterShuffling);
+    }
 }
