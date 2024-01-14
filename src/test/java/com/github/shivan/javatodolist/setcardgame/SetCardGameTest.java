@@ -165,16 +165,28 @@ class SetCardGameTest {
 
         assertEquals(setCardGame.board.cards.size(), 12);
 
-        boolean hasSet = setCardGame.board.removeSetIfExists();
+        // Game is ready
+        boolean hasSet = false;
 
-        if (hasSet == true) {
-            System.out.println("--> Board had a set");
-            assertEquals(setCardGame.board.cards.size(), 9);
-        } else {
-            System.out.println("--> Board had NO set");
-            assertEquals(setCardGame.board.cards.size(), 12);
+        while (setCardGame.deck.size() >= 3 || hasSet) {
+            int numberOfCardsOnBoard = setCardGame.board.cards.size();
+            hasSet = setCardGame.board.removeSetIfExists();
+
+            if (hasSet) {
+                System.out.println("--> Board had a set");
+                assertEquals(setCardGame.board.cards.size(), numberOfCardsOnBoard - 3);
+            } else {
+                System.out.println("--> Board had NO set");
+                assertEquals(setCardGame.board.cards.size(), numberOfCardsOnBoard);
+            }
+
+            if (setCardGame.deck.size() >= 3 && !hasSet) {
+                setCardGame.dealCards();
+            } else if (setCardGame.deck.size() >= 3 && setCardGame.board.cards.size() < 12) {
+                setCardGame.dealCards();
+            }
+
+            System.out.println("--> Board has " + setCardGame.board.cards.size() + " cards");
         }
-
-        setCardGame.dealCards();
     }
 }
