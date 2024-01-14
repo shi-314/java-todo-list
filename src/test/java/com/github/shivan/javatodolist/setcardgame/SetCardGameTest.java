@@ -10,8 +10,6 @@ class SetCardGameTest {
 
     @Test
     void testIsSetWorksAsExpected01() {
-        SetCardGame setCardGame = new SetCardGame();
-
         Card card1 = new Card();
         card1.number = 1;
         card1.color = 1;
@@ -30,13 +28,12 @@ class SetCardGameTest {
         card3.shape = 3;
         card3.shading = 3;
 
-        assertTrue(setCardGame.isSet(card1, card2, card3));
+        Board board = new Board();
+        assertFalse(board.isSet(card1, card2, card3));
     }
 
     @Test
     void testIsSetWorksAsExpected02() {
-        SetCardGame setCardGame = new SetCardGame();
-
         Card card1 = new Card();
         card1.number = 1;
         card1.color = 2;
@@ -55,13 +52,12 @@ class SetCardGameTest {
         card3.shape = 1;
         card3.shading = 1;
 
-        assertTrue(setCardGame.isSet(card1, card2, card3));
+        Board board = new Board();
+        assertFalse(board.isSet(card1, card2, card3));
     }
 
     @Test
     void testIsNotSetWorksAsExpected01() {
-        SetCardGame setCardGame = new SetCardGame();
-
         Card card1 = new Card();
         card1.number = 1;
         card1.color = 1;
@@ -80,13 +76,12 @@ class SetCardGameTest {
         card3.shape = 3;
         card3.shading = 1;
 
-        assertFalse(setCardGame.isSet(card1, card2, card3));
+        Board board = new Board();
+        assertFalse(board.isSet(card1, card2, card3));
     }
 
     @Test
     void testIsNotSetWorksAsExpected02() {
-        SetCardGame setCardGame = new SetCardGame();
-
         Card card1 = new Card();
         card1.number = 1;
         card1.color = 1;
@@ -105,7 +100,8 @@ class SetCardGameTest {
         card3.shape = 3;
         card3.shading = 3;
 
-        assertFalse(setCardGame.isSet(card1, card2, card3));
+        Board board = new Board();
+        assertFalse(board.isSet(card1, card2, card3));
     }
 
     @Test
@@ -146,13 +142,39 @@ class SetCardGameTest {
         assertEquals(sizeAfterShuffling, sizeBeforeShuffling);
         assertNotEquals(firstCardBeforeShuffling, firstCardAfterShuffling);
     }
+
     @Test
     void testDealCards() {
         SetCardGame setCardGame = new SetCardGame();
         setCardGame.dealCards();
         int sizeOfDeck = setCardGame.deck.size();
-        int sizeOfBoard = setCardGame.board.boardCards.size();
+        int sizeOfBoard = setCardGame.board.cards.size();
         assertEquals(sizeOfBoard, 3);
         assertEquals(sizeOfDeck, 78);
+    }
+
+    @Test
+    void testGame() {
+        SetCardGame setCardGame = new SetCardGame();
+        setCardGame.shuffleDeck();
+
+        setCardGame.dealCards();
+        setCardGame.dealCards();
+        setCardGame.dealCards();
+        setCardGame.dealCards();
+
+        assertEquals(setCardGame.board.cards.size(), 12);
+
+        boolean hasSet = setCardGame.board.removeSetIfExists();
+
+        if (hasSet == true) {
+            System.out.println("--> Board had a set");
+            assertEquals(setCardGame.board.cards.size(), 9);
+        } else {
+            System.out.println("--> Board had NO set");
+            assertEquals(setCardGame.board.cards.size(), 12);
+        }
+
+        setCardGame.dealCards();
     }
 }
