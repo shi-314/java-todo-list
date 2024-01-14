@@ -3,6 +3,7 @@ package com.github.shivan.javatodolist.setcardgame;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -153,8 +154,7 @@ class SetCardGameTest {
         assertEquals(sizeOfDeck, 78);
     }
 
-    @Test
-    void testGame() {
+    int runSimulationAndReturnBoardSize() {
         SetCardGame setCardGame = new SetCardGame();
         setCardGame.shuffleDeck();
 
@@ -173,20 +173,49 @@ class SetCardGameTest {
             hasSet = setCardGame.board.removeSetIfExists();
 
             if (hasSet) {
-                System.out.println("--> Board had a set");
+//                System.out.println("--> Board had a set");
                 assertEquals(setCardGame.board.cards.size(), numberOfCardsOnBoard - 3);
             } else {
-                System.out.println("--> Board had NO set");
+//                System.out.println("--> Board had NO set");
                 assertEquals(setCardGame.board.cards.size(), numberOfCardsOnBoard);
             }
 
             if (setCardGame.deck.size() >= 3 && !hasSet) {
                 setCardGame.dealCards();
+                hasSet = true;
             } else if (setCardGame.deck.size() >= 3 && setCardGame.board.cards.size() < 12) {
                 setCardGame.dealCards();
+                hasSet = true;
             }
 
-            System.out.println("--> Board has " + setCardGame.board.cards.size() + " cards");
+//            System.out.println("--> Board has " + setCardGame.board.cards.size() + " cards");
+        }
+
+        return setCardGame.board.cards.size();
+    }
+
+    @Test
+    void testCollectStatistics() {
+        int numberOfSimulationsToRun = 100000;
+        ArrayList<Integer> simulationResults = new ArrayList<>();
+        for (int run = 0; run < numberOfSimulationsToRun; run++) {
+            int boardSize = runSimulationAndReturnBoardSize();
+            simulationResults.add(boardSize);
+        }
+
+        HashMap<Integer, Integer> boardSizeToCountMap = new HashMap<>();
+        for (int boardSize : simulationResults) {
+            if (boardSizeToCountMap.containsKey(boardSize)) {
+                boardSizeToCountMap.put(boardSize, boardSizeToCountMap.get(boardSize) + 1);
+            } else {
+                boardSizeToCountMap.put(boardSize, 1);
+            }
+        }
+
+        for (int boardSize : boardSizeToCountMap.keySet()) {
+            int amount = boardSizeToCountMap.get(boardSize);
+            float percentage = ((float) amount / numberOfSimulationsToRun) * 100;
+            System.out.println("Board Size: " + boardSize + " = " + percentage + "% (" + amount + ")");
         }
     }
 }
