@@ -6,6 +6,7 @@ import java.util.Collections;
 public class SetCardGame {
 
     ArrayList<Card> deck = createDeck();
+    Board board = new Board();
 
     private boolean allTheSameOrAllDifferent (int a, int b, int c) {
         if (a==b && b==c) {
@@ -59,5 +60,13 @@ public class SetCardGame {
 
     public void shuffleDeck() {
         Collections.shuffle(deck);
+    }
+
+    public void dealCards() {
+        for (int cardNumber = 1; cardNumber <= 3; cardNumber++) {
+            Card card = drawCard();
+            board.boardCards.add(card);
+        }
+
     }
 }

@@ -146,4 +146,13 @@ class SetCardGameTest {
         assertEquals(sizeAfterShuffling, sizeBeforeShuffling);
         assertNotEquals(firstCardBeforeShuffling, firstCardAfterShuffling);
     }
+    @Test
+    void testDealCards() {
+        SetCardGame setCardGame = new SetCardGame();
+        setCardGame.dealCards();
+        int sizeOfDeck = setCardGame.deck.size();
+        int sizeOfBoard = setCardGame.board.boardCards.size();
+        assertEquals(sizeOfBoard, 3);
+        assertEquals(sizeOfDeck, 78);
+    }
 }
